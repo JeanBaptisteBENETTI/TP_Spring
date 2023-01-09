@@ -12,6 +12,7 @@ import java.util.List;
 import monprojet.entity.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.jdbc.Sql;
+import monprojet.dto.*;
 
 @Log4j2 // Génère le 'logger' pour afficher les messages de trace
 @DataJpaTest
@@ -44,6 +45,17 @@ public class CountryRepositoryTest {
     }
 
     @Test
+    void checkPopulationPays() {
+        log.info("On calcule la population d'un pays");
+        int population = countryDAO.getPopulationTotale(1);
+        assertEquals(population, 12, "La population doit être de 12");
+    }
 
+    @Test
+    void populationParPays() {
+        log.info("On récupère la liste des pays avec leur population");
+        List<PopulationParPays> res = countryDAO.populationParPays();
+        assertEquals(res.size(), 3, "Il n'y a pas le bon nombre de pays");
+    }
 
 }
